@@ -14,29 +14,40 @@ namespace xadrez_console
 
                 while (!partida.terminada)
                 {
-                    Console.Clear();
-                    Tela.imprimirTabuleiro(partida.tab);
-                    Console.WriteLine();
-                    Console.WriteLine("Turno" + partida.turno);
-                    Console.WriteLine("Aguardando jogada:" + partida.jogadorAtual);
+                    try
+                    {
+                        Console.Clear();
+                        Tela.imprimirTabuleiro(partida.tab);
+                        Console.WriteLine();
+                        Console.WriteLine("Turno" + partida.turno);
+                        Console.WriteLine("Aguardando jogada:" + partida.jogadorAtual);
 
-                    //imprime campo de seleção da peça
-                    Console.WriteLine();
-                    Console.WriteLine("Origem");
-                    Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                        //imprime campo de seleção da peça
+                        Console.WriteLine();
+                        Console.WriteLine("Origem");
+                        Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                        partida.validarPosicaoOrigem(origem);
 
-                    //imprime posições possiveis de movimentação
-                    bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
+                        //imprime posições possiveis de movimentação
+                        bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
 
-                    Console.Clear();
-                    Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
+                        Console.Clear();
+                        Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
 
-                    //imprime campo para mover a peça
-                    Console.WriteLine();
-                    Console.WriteLine("Destino");
-                    Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+                        //imprime campo para mover a peça
+                        Console.WriteLine();
+                        Console.WriteLine("Destino");
+                        Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+                        partida.validarPosicaoDestino(origem, destino);
 
-                    partida.realizaJogada(origem, destino);
+                        partida.realizaJogada(origem, destino);
+                    }
+                    catch (TabuleiroException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
+                    
                 }                
 
             }
