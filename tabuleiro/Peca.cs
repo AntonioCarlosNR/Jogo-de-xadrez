@@ -1,6 +1,6 @@
 ﻿namespace tabuleiro
 {
-    class Peca
+    abstract class Peca
     {
         public Posicao posicao { get; set; }
         //protected set: a propriedade só pode ser alterada por ela mesma e por suas subclasses
@@ -19,5 +19,7 @@
         {
             qtdMovimentos++;
         }
+
+        public abstract bool[,] movimentosPossiveis();
     }
 }
